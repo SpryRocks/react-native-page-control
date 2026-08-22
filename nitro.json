@@ -1,0 +1,23 @@
+{
+  "cxxNamespace": ["pagecontrol"],
+  "ios": {
+    "iosModuleName": "PageControl"
+  },
+  "android": {
+    "androidNamespace": ["pagecontrol"],
+    "androidCxxLibName": "pagecontrol"
+  },
+  "autolinking": {
+    "PageControl": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridPageControl"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridPageControl"
+      }
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
