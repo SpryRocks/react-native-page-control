@@ -1,10 +1,25 @@
 import { View, StyleSheet } from 'react-native';
-import { PageControlView } from 'react-native-page-control';
+import { PageControl } from 'react-native-page-control';
+import { useState } from 'react';
+
+const INACTIVE_DOT_COLOR = '#FFFFFF33';
+
+const ACTIVE_DOT_COLOR = '#FFDD00';
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState(2);
+
   return (
     <View style={styles.container}>
-      <PageControlView color="#32a852" style={styles.box} />
+      <PageControl
+        style={styles.box}
+        numberOfPages={10}
+        currentPage={currentPage}
+        pageIndicatorTintColor={INACTIVE_DOT_COLOR}
+        currentPageIndicatorTintColor={ACTIVE_DOT_COLOR}
+        hidesForSinglePage
+        onPageChange={undefined}
+      />
     </View>
   );
 }
@@ -12,12 +27,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#474747',
   },
   box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+    height: 26,
   },
 });

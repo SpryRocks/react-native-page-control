@@ -1,1 +1,1 @@
-export { PageControlView } from './PageControlView';
+export { PageControl } from './PageControl';

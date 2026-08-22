@@ -5,11 +5,11 @@ import type {
 } from 'react-native-nitro-modules';
 
 export interface PageControlProps extends HybridViewProps {
-  color: string;
+  numberOfPages: number;
+  currentPage: number;
+  pageIndicatorTintColor?: string;
 }
+
 export interface PageControlMethods extends HybridViewMethods {}
 
-export type PageControl = HybridView<
-  PageControlProps,
-  PageControlMethods
->;
+export type PageControl = HybridView<PageControlProps, PageControlMethods>;

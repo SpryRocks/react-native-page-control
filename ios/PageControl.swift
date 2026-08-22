@@ -1,28 +1,41 @@
 class HybridPageControl : HybridPageControlSpec {
+  var view = UIPageControl()
 
-  // UIView
-  var view: UIView = UIView()
-
-  // props
-  var color: String = "#000" {
-    didSet {
-      view.backgroundColor = hexStringToUIColor(hexColor: color)
-    }
+  var numberOfPages: Double {
+    get { Double(view.numberOfPages) }
+    set { view.numberOfPages = Int(newValue) }
   }
   
-  func hexStringToUIColor(hexColor: String) -> UIColor {
-    let stringScanner = Scanner(string: hexColor)
+  var currentPage: Double {
+    get { Double(view.currentPage) }
+    set { view.currentPage = Int(newValue) }
+  }
+  
+  var pageIndicatorTintColor: String? {
+    get { view.pageIndicatorTintColor?.hexString }
+    set { view.pageIndicatorTintColor = newValue.flatMap { UIColor(hex: $0) }  }
+  }
+}
 
-    if(hexColor.hasPrefix("#")) {
-      stringScanner.scanLocation = 1
+extension UIColor {
+    // Создание цвета из Hex-строки (#RRGGBB)
+    convenience init(hex: String, default defaultColor: UIColor = .gray) {
+        let scanner = Scanner(string: hex.replacingOccurrences(of: "#", with: ""))
+        var rgb: UInt64 = 0
+        if scanner.scanHexInt64(&rgb) {
+            let r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+            let g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+            let b = CGFloat(rgb & 0x0000FF) / 255.0
+            self.init(red: r, green: g, blue: b, alpha: 1.0)
+        } else {
+            self.init(cgColor: defaultColor.cgColor)
+        }
     }
-    var color: UInt32 = 0
-    stringScanner.scanHexInt32(&color)
 
-    let r = CGFloat(Int(color >> 16) & 0x000000FF)
-    let g = CGFloat(Int(color >> 8) & 0x000000FF)
-    let b = CGFloat(Int(color) & 0x000000FF)
-
-    return UIColor(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1)
-  }  
+    // Получение Hex-строки из UIColor
+    var hexString: String {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        return String(format: "#%02X%02X%02X", Int(r * 255), Int(g * 255), Int(b * 255))
+    }
 }
